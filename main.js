@@ -23,7 +23,7 @@ function initGames() {
   squares.forEach((square) => {
     square.addEventListener("click", handleClick);
   });
-  restartButton.addEventListener("click", reset);
+  restartButton.addEventListener("click", resetGame);
 }
 
 function handleClick(event) {
@@ -74,7 +74,7 @@ function endGame(isDraw) {
   }
 }
 
-function reset() {
+function resetGame() {
   currentPlayer = "O";
   gameActive = true;
   fieldStatus = ["", "", "", "", "", "", "", "", ""];
