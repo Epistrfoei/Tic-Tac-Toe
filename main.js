@@ -20,20 +20,21 @@ const winningCombinations = [
 initGames();
 
 function initGames() {
-  squares.forEach((square) => {
-    square.addEventListener("click", handleClick);
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("playing-field__square")) {
+      handleClick(event.target);
+    }
   });
   restartButton.addEventListener("click", resetGame);
 }
 
 function handleClick(event) {
-  const clickedSquare = event.target;
-  const squareIndex = parseInt(clickedSquare.getAttribute("data-cell-index"));
+  const squareIndex = parseInt(event.getAttribute("data-cell-index"));
   if (fieldStatus[squareIndex] !== "" || !gameActive) {
     return;
   }
   fieldStatus[squareIndex] = currentPlayer;
-  clickedSquare.classList.add(currentPlayerClass);
+  event.classList.add(currentPlayerClass);
 
   if (checkWin()) {
     endGame(false);
@@ -48,8 +49,8 @@ function handleClick(event) {
   }
 }
 function checkWin() {
-  for (let i = 0; i < combinations.length; i++) {
-    const [a, b, c] = combinations[i];
+  for (let i = 0; i < winningCombinations.length; i++) {
+    const [a, b, c] = winningCombinations[i];
     if (
       fieldStatus[a] &&
       fieldStatus[a] === fieldStatus[b] &&
