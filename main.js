@@ -1,8 +1,14 @@
 let squares = document.querySelectorAll(".playing-field__square");
-let restartButton = document.querySelector(".button--restart");
+let resetButton = document.querySelector(".button--restart");
 let result = document.querySelector(".result");
-let currentPlayer = "X";
-let currentPlayerClass = "playing-field__square--cross";
+const cross = "X";
+const zero = "O";
+const classCross = "playing-field__square--cross";
+const classZero = "playing-field__square--zero";
+let currentPlayer = cross;
+let currentPlayerClass = classCross;
+let hover = document.querySelector(".playing-field__square:hover");
+const gameName = document.querySelector(".game-name");
 
 let gameActive = true;
 let fieldStatus = ["", "", "", "", "", "", "", "", ""];
@@ -25,7 +31,7 @@ function initGames() {
       handleClick(event.target);
     }
   });
-  restartButton.addEventListener("click", resetGame);
+  resetButton.addEventListener("click", resetGame);
 }
 
 function handleClick(event) {
@@ -33,22 +39,22 @@ function handleClick(event) {
   if (fieldStatus[squareIndex] !== "" || !gameActive) {
     return;
   }
+
   fieldStatus[squareIndex] = currentPlayer;
   event.classList.add(currentPlayerClass);
-
-  if (checkWin()) {
+  gameName.replaceWith(resetButton);
+  resetButton.style.visibility = "visible";
+  if (isWin()) {
     endGame(false);
-  } else if (checkDraw()) {
+  } else if (isDraw()) {
     endGame(true);
   } else {
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    currentPlayer = currentPlayer === cross ? zero : cross;
     currentPlayerClass =
-      currentPlayerClass === "playing-field__square--zero"
-        ? "playing-field__square--cross"
-        : "playing-field__square--zero";
+      currentPlayerClass === classZero ? classCross : classZero;
   }
 }
-function checkWin() {
+function isWin() {
   for (let i = 0; i < winningCombinations.length; i++) {
     const [a, b, c] = winningCombinations[i];
     if (
@@ -62,7 +68,7 @@ function checkWin() {
   return false;
 }
 
-function checkDraw() {
+function isDraw() {
   return !fieldStatus.includes("");
 }
 
@@ -76,7 +82,7 @@ function endGame(isDraw) {
 }
 
 function resetGame() {
-  currentPlayer = "O";
+  currentPlayer = cross;
   gameActive = true;
   fieldStatus = ["", "", "", "", "", "", "", "", ""];
   squares.forEach((square) => {
@@ -84,5 +90,8 @@ function resetGame() {
       "playing-field__square--cross",
       "playing-field__square--zero"
     );
+    result.textContent = "Result";
+    resetButton.replaceWith(gameName);
+    resetButton.style.visibility = "hidden";
   });
 }

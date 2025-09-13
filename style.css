@@ -20,7 +20,7 @@
 
 html {
   font-family: "Inter 18pt", Arial, Helvetica, sans-serif;
-  font-size: 48px;
+  font-size: 26px;
   font-weight: 700;
 }
 
@@ -40,7 +40,7 @@ li {
 body {
   background-color: rgba(228, 228, 228, 1);
   padding-inline: 300px;
-  padding-block: 20px;
+  padding-block: 6px;
   display: flex;
   flex-direction: column;
   row-gap: 33px;
@@ -49,20 +49,27 @@ body {
   flex-wrap: nowrap;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  height: 500px;
+}
+
 .playing-field {
   background-color: rgba(245, 245, 245, 1);
   border-radius: 37px;
   padding: 49px;
   display: flex;
   flex-wrap: wrap;
-  width: 580px;
-  height: 580px;
+  width: 488px;
+  height: 495px;
   gap: 25px;
 }
 
 .playing-field__square {
-  width: 144px;
-  height: 144px;
+  width: 113px;
+  height: 115px;
   border-radius: 16px;
   background-color: rgba(228, 228, 228, 1);
   box-shadow: 10px 10px 0 0 rgba(33, 33, 33, 1);
@@ -109,12 +116,8 @@ body {
   border-radius: 16px;
   text-align: center;
   padding-inline: 73px;
-  padding-block: 23px;
+  padding-block: 10px;
   font-size: 1rem;
-  width: 580px;
-  max-width: 40vw;
-  min-width: 550px;
-  max-width: 10vh;
 }
 
 .button--restart {
@@ -127,7 +130,7 @@ body {
 }
 
 .button--restart:hover {
-  background-color: #46478ace;
+  background-color: #0004fbce;
   transition: background-color 0.1s linear;
   color: black;
 
@@ -141,8 +144,11 @@ body {
   width: 70px;
   height: 70px;
   display: block;
-  text-align: center;
   margin-right: 15px;
+  width: 50px;
+  height: 46px;
+  background-size: 1.5rem;
+  background-position: center;
 }
 
 .playing-field__square--cross {
