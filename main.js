@@ -1,4 +1,5 @@
 let squares = document.querySelectorAll(".playing-field__square");
+let playingField = document.querySelector(".playing-field");
 let resetButton = document.querySelector(".button--restart");
 let result = document.querySelector(".result");
 const cross = "X";
@@ -27,7 +28,7 @@ let copyFieldStatus = [...fieldStatus];
 initGames();
 
 function initGames() {
-  document.addEventListener("click", function (event) {
+  playingField.addEventListener("click", function (event) {
     if (event.target.classList.contains("playing-field__square")) {
       handleClick(event.target);
     }
