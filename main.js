@@ -11,7 +11,7 @@ let hover = document.querySelector(".playing-field__square:hover");
 const gameName = document.querySelector(".game-name");
 
 let gameActive = true;
-let fieldStatus = ["", "", "", "", "", "", "", "", ""];
+const fieldStatus = ["", "", "", "", "", "", "", "", ""];
 const winningCombinations = [
   [0, 1, 2],
   [3, 4, 5],
@@ -22,6 +22,7 @@ const winningCombinations = [
   [0, 4, 8],
   [2, 4, 6],
 ];
+let copyFieldStatus = [...fieldStatus];
 
 initGames();
 
@@ -36,11 +37,11 @@ function initGames() {
 
 function handleClick(event) {
   const squareIndex = parseInt(event.getAttribute("data-cell-index"));
-  if (fieldStatus[squareIndex] !== "" || !gameActive) {
+  if (copyFieldStatus[squareIndex] !== "" || !gameActive) {
     return;
   }
 
-  fieldStatus[squareIndex] = currentPlayer;
+  copyFieldStatus[squareIndex] = currentPlayer;
   event.classList.add(currentPlayerClass);
   gameName.replaceWith(resetButton);
   resetButton.style.visibility = "visible";
@@ -58,9 +59,9 @@ function isWin() {
   for (let i = 0; i < winningCombinations.length; i++) {
     const [a, b, c] = winningCombinations[i];
     if (
-      fieldStatus[a] &&
-      fieldStatus[a] === fieldStatus[b] &&
-      fieldStatus[a] === fieldStatus[c]
+      copyFieldStatus[a] &&
+      copyFieldStatus[a] === copyFieldStatus[b] &&
+      copyFieldStatus[a] === copyFieldStatus[c]
     ) {
       return true;
     }
@@ -69,7 +70,7 @@ function isWin() {
 }
 
 function isDraw() {
-  return !fieldStatus.includes("");
+  return !copyFieldStatus.includes("");
 }
 
 function endGame(isDraw) {
@@ -84,7 +85,7 @@ function endGame(isDraw) {
 function resetGame() {
   currentPlayer = cross;
   gameActive = true;
-  fieldStatus = ["", "", "", "", "", "", "", "", ""];
+  copyFieldStatus = ["", "", "", "", "", "", "", "", ""];
   squares.forEach((square) => {
     square.classList.remove(
       "playing-field__square--cross",
