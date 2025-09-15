@@ -8,7 +8,7 @@ const crossClass = "playing-field__square--cross";
 const zeroClass = "playing-field__square--zero";
 let currentPlayerSymbol = crossSymbol;
 let currentPlayerClass = crossClass;
-let hover = document.querySelector(".playing-field__square:hover");
+
 const gameName = document.querySelector(".game-name");
 
 let gameActive = true;
