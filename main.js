@@ -36,14 +36,14 @@ function initGames() {
   resetButton.addEventListener("click", resetGame);
 }
 
-function handleClick(event) {
-  const squareIndex = parseInt(event.getAttribute("data-cell-index"));
+function handleClick(fieldCell) {
+  const squareIndex = parseInt(fieldCell.getAttribute("data-cell-index"));
   if (copyFieldStatus[squareIndex] !== "" || !gameActive) {
     return;
   }
 
   copyFieldStatus[squareIndex] = currentPlayer;
-  event.classList.add(currentPlayerClass);
+  fieldCell.classList.add(currentPlayerClass);
   gameName.replaceWith(resetButton);
   resetButton.style.visibility = "visible";
   if (isWin()) {
