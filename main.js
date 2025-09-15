@@ -1,13 +1,14 @@
 let squares = document.querySelectorAll(".playing-field__square");
-let resetButton = document.querySelector(".button--restart");
+let playingField = document.querySelector(".playing-field");
+let resetButton = document.querySelector(".button-restart");
 let result = document.querySelector(".result");
-const cross = "X";
-const zero = "O";
-const classCross = "playing-field__square--cross";
-const classZero = "playing-field__square--zero";
-let currentPlayer = cross;
-let currentPlayerClass = classCross;
-let hover = document.querySelector(".playing-field__square:hover");
+const crossSymbol = "X";
+const zeroSymbol = "O";
+const crossClass = "playing-field__square--cross";
+const zeroClass = "playing-field__square--zero";
+let currentPlayerSymbol = crossSymbol;
+let currentPlayerClass = crossClass;
+
 const gameName = document.querySelector(".game-name");
 
 let gameActive = true;
@@ -22,12 +23,12 @@ const winningCombinations = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-let copyFieldStatus = [...fieldStatus];
+let copyFieldStatusToChangeState = [...fieldStatus];
 
 initGames();
 
 function initGames() {
-  document.addEventListener("click", function (event) {
+  playingField.addEventListener("click", function (event) {
     if (event.target.classList.contains("playing-field__square")) {
       handleClick(event.target);
     }
@@ -35,14 +36,14 @@ function initGames() {
   resetButton.addEventListener("click", resetGame);
 }
 
-function handleClick(event) {
-  const squareIndex = parseInt(event.getAttribute("data-cell-index"));
-  if (copyFieldStatus[squareIndex] !== "" || !gameActive) {
+function handleClick(fieldCell) {
+  const squareIndex = parseInt(fieldCell.getAttribute("data-cell-index"));
+  if (copyFieldStatusToChangeState[squareIndex] !== "" || !gameActive) {
     return;
   }
 
-  copyFieldStatus[squareIndex] = currentPlayer;
-  event.classList.add(currentPlayerClass);
+  copyFieldStatusToChangeState[squareIndex] = currentPlayerSymbol;
+  fieldCell.classList.add(currentPlayerClass);
   gameName.replaceWith(resetButton);
   resetButton.style.visibility = "visible";
   if (isWin()) {
@@ -50,18 +51,19 @@ function handleClick(event) {
   } else if (isDraw()) {
     endGame(true);
   } else {
-    currentPlayer = currentPlayer === cross ? zero : cross;
+    currentPlayerSymbol =
+      currentPlayerSymbol === crossSymbol ? zeroSymbol : crossSymbol;
     currentPlayerClass =
-      currentPlayerClass === classZero ? classCross : classZero;
+      currentPlayerClass === zeroClass ? crossClass : zeroClass;
   }
 }
 function isWin() {
   for (let i = 0; i < winningCombinations.length; i++) {
     const [a, b, c] = winningCombinations[i];
     if (
-      copyFieldStatus[a] &&
-      copyFieldStatus[a] === copyFieldStatus[b] &&
-      copyFieldStatus[a] === copyFieldStatus[c]
+      copyFieldStatusToChangeState[a] &&
+      copyFieldStatusToChangeState[a] === copyFieldStatusToChangeState[b] &&
+      copyFieldStatusToChangeState[a] === copyFieldStatusToChangeState[c]
     ) {
       return true;
     }
@@ -70,7 +72,7 @@ function isWin() {
 }
 
 function isDraw() {
-  return !copyFieldStatus.includes("");
+  return !copyFieldStatusToChangeState.includes("");
 }
 
 function endGame(isDraw) {
@@ -78,14 +80,14 @@ function endGame(isDraw) {
   if (isDraw) {
     result.textContent = "Game ended in a draw!";
   } else {
-    result.textContent = `${currentPlayer} wins!`;
+    result.textContent = `${currentPlayerSymbol} wins!`;
   }
 }
 
 function resetGame() {
-  currentPlayer = cross;
+  currentPlayerSymbol = crossSymbol;
   gameActive = true;
-  copyFieldStatus = ["", "", "", "", "", "", "", "", ""];
+  copyFieldStatusToChangeState = ["", "", "", "", "", "", "", "", ""];
   squares.forEach((square) => {
     square.classList.remove(
       "playing-field__square--cross",
