@@ -2,12 +2,12 @@ let squares = document.querySelectorAll(".playing-field__square");
 let playingField = document.querySelector(".playing-field");
 let resetButton = document.querySelector(".button-restart");
 let result = document.querySelector(".result");
-const cross = "X";
-const zero = "O";
-const classCross = "playing-field__square--cross";
-const classZero = "playing-field__square--zero";
-let currentPlayer = cross;
-let currentPlayerClass = classCross;
+const crossSymbol = "X";
+const zeroSymbol = "O";
+const crossClass = "playing-field__square--cross";
+const zeroClass = "playing-field__square--zero";
+let currentPlayerSymbol = crossSymbol;
+let currentPlayerClass = crossClass;
 let hover = document.querySelector(".playing-field__square:hover");
 const gameName = document.querySelector(".game-name");
 
@@ -42,7 +42,7 @@ function handleClick(fieldCell) {
     return;
   }
 
-  copyFieldStatus[squareIndex] = currentPlayer;
+  copyFieldStatus[squareIndex] = currentPlayerSymbol;
   fieldCell.classList.add(currentPlayerClass);
   gameName.replaceWith(resetButton);
   resetButton.style.visibility = "visible";
@@ -51,9 +51,10 @@ function handleClick(fieldCell) {
   } else if (isDraw()) {
     endGame(true);
   } else {
-    currentPlayer = currentPlayer === cross ? zero : cross;
+    currentPlayerSymbol =
+      currentPlayerSymbol === crossSymbol ? zeroSymbol : crossSymbol;
     currentPlayerClass =
-      currentPlayerClass === classZero ? classCross : classZero;
+      currentPlayerClass === zeroClass ? crossClass : zeroClass;
   }
 }
 function isWin() {
@@ -79,12 +80,12 @@ function endGame(isDraw) {
   if (isDraw) {
     result.textContent = "Game ended in a draw!";
   } else {
-    result.textContent = `${currentPlayer} wins!`;
+    result.textContent = `${currentPlayerSymbol} wins!`;
   }
 }
 
 function resetGame() {
-  currentPlayer = cross;
+  currentPlayerSymbol = crossSymbol;
   gameActive = true;
   copyFieldStatus = ["", "", "", "", "", "", "", "", ""];
   squares.forEach((square) => {
