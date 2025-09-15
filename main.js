@@ -1,6 +1,6 @@
 let squares = document.querySelectorAll(".playing-field__square");
 let playingField = document.querySelector(".playing-field");
-let resetButton = document.querySelector(".button--restart");
+let resetButton = document.querySelector(".button-restart");
 let result = document.querySelector(".result");
 const cross = "X";
 const zero = "O";
